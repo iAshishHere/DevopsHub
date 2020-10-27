@@ -1,0 +1,43 @@
+[33mcommit e05d4376431df8dcbe0672fbc1664b8f2b8a72eb[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: iashishhere <iashishhere@gmail.com>
+Date:   Wed Oct 28 01:34:13 2020 +0530
+
+    Revert "modified myapp.yaml"
+    
+    This reverts commit 1ed86c4d000d280b1f48cae81a7bf054c5e24342.
+    
+            modified:   kubernetes/init_container/myapp.yaml
+
+[33mcommit 12ec93304b98ff16f918e6fad94ed849238e345a[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: iashishhere <iashishhere@gmail.com>
+Date:   Wed Oct 28 01:23:49 2020 +0530
+
+    Revert "learning git revert"
+    
+    This reverts commit dda22108bf3c1aeba59ed1375cbd74958742b9bb.
+
+[33mcommit 1ed86c4d000d280b1f48cae81a7bf054c5e24342[m
+Author: iashishhere <iashishhere@gmail.com>
+Date:   Wed Oct 28 01:23:08 2020 +0530
+
+    test
+
+[33mcommit dda22108bf3c1aeba59ed1375cbd74958742b9bb[m
+Author: iashishhere <iashishhere@gmail.com>
+Date:   Wed Oct 28 01:20:02 2020 +0530
+
+    learning git revert
+    
+    This reverts commit dd13a77fd5811e4af7188485ce2f8d4a5e2813b3.
+
+[33mcommit b84b4e8ea2732fd508ec1c19dd2bb780a997bbc3[m
+Author: iashishhere <iashishhere@gmail.com>
+Date:   Wed Oct 28 01:04:43 2020 +0530
+
+    imlemented init containers
+
+[33mcommit dd13a77fd5811e4af7188485ce2f8d4a5e2813b3[m
+Author: Ashish Kumar <iashishhere@gmail.com>
+Date:   Sun Oct 18 00:49:37 2020 +0530
+
+    Initial commit
