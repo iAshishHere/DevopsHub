@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-api2-deployment
+  namespace: flask
+  labels:
+    app: flask-api2
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: flask-api2
+  template:
+    metadata:
+      labels:
+        app: flask-api2
+    spec:
+      containers:
+      - name: flask-api2-container
+        image: akflaskacr.azurecr.io/flask-api2:v1
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: flask
+
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: flask-api2-services
+# spec:
+#   selector:
+#     app: flask-api2
+#   ports:
+#     - port: 80
+#       targetPort: 5000
+#   type: LoadBalancer
+
+
+apiVersion: v1
+kind: Service
+metadata:  
+  name: flask-api2-services
+spec:
+  selector:    
+    app: flask-api2
+  type: ClusterIP
+  ports:  
+  - name: http
+    port: 80
+    targetPort: 5000
+    protocol: TCP
