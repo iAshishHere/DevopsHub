@@ -1,0 +1,70 @@
+
+trigger:
+  branches:
+    include:
+    - master/*
+   
+pr: none
+
+pool:
+  name: my-pool
+
+variables:
+
+# Control over Stages - If true, it will skip a particular stage
+- name: Dev_Stage
+  value: false
+- name: QA_Stage
+  value: false
+
+# All the variables defined in variable groups
+- group: Dev_Parameters
+- group: QA_Parameters
+
+
+# Control over jobs - If true, it will skip a particular job in all the stages
+- name: Skip_Copy_Files
+  value: false
+
+
+# Pipeline are devided among different stages. In this example, we have 2 stages, Dev_Stage and QA_Stage
+stages:
+
+- stage: Dev_Stage
+  displayName: 'Dev_Stage'
+  condition: and(eq(variables['Dev_Stage'], true),contains(variables['Build.SourceBranch'], 'master'))
+
+  jobs:
+  - deployment: Copy_Files_to_Remote
+    displayName: Copy Files to Remote
+    environment: 'Dev'
+    condition: eq(variables['Skip_Copy_Files'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: /templates/copy-files-to-remote-template.yaml
+            parameters:                              
+              destination: $(dev_destination)
+              sshEndpoint: $(dev_connection)
+              source: $(dev_source)
+
+
+- stage: QA_Stage
+  displayName: 'QA_Stage'
+  condition: and(eq(variables['QA_Stage'], true),contains(variables['Build.SourceBranch'], 'master'))
+
+  jobs:
+  - deployment: Copy_Files_to_Remote
+    displayName: Copy Files to Remote
+    environment: 'QA'
+    condition: eq(variables['Skip_Copy_Files'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: /templates/copy-files-to-remote-template.yaml
+            parameters:                              
+              destination: $(qa_destination)
+              sshEndpoint: $(qa_service_connection)
+              source: $(qa_source)

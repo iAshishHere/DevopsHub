@@ -1,0 +1,18 @@
+parameters:
+- name: destination
+  type: string
+- name: source
+  type: string
+- name: sshEndpoint
+  type: string
+    
+steps:
+- checkout: self
+
+- task: CopyFilesOverSSH@0
+  displayName:  Copy files to remote machine
+  inputs:
+    sshEndpoint: '${{ parameters.sshEndpoint }}'
+    sourceFolder: '${{ parameters.source }}'
+    targetFolder: '${{ parameters.destination }}'
+    readyTimeout: '20000'
