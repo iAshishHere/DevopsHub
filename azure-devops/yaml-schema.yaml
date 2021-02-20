@@ -1,0 +1,108 @@
+
+trigger:
+  branches:
+    include:
+    - master/*
+    
+pr: none
+
+pool:
+  name: your_pool_name
+
+variables:
+- name: some_variable
+  value: 'some_value'
+
+# sample to skip a particular stage
+
+- name: Stage1
+  value: false
+  
+- name: Stage2
+  value: false
+
+# sample to skip a particular jon in all the stages
+
+- name: Skip_Job1
+  value: false
+- name: Skip_Job2
+  value: false
+
+# sample to get variable groups in yaml
+ 
+- group: some_variable_group
+
+# sample to get key-vault in yaml
+
+- group: some_key_valut
+
+# Pipeline are devided among different stages.
+
+stages:
+
+- stage: Stage1
+  displayName: 'Stage1'
+  condition: and(eq(variables['Stage1'], true),contains(variables['Build.SourceBranch'], 'master'))
+
+  jobs:
+  - deployment: Stage1_Job1  
+    displayName: Stage1_Job1
+    environment: 'Stage1'
+    condition: eq(variables['Skip_Job1'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: template/sample-template.yaml
+            parameters:            
+              parameter1: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+              parameter2: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+
+
+
+  - deployment: Stage1_Job2  
+    displayName: Stage1_Job2
+    environment: 'Stage1'
+    condition: eq(variables['Skip_Job2'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: template/sample-template.yaml
+            parameters: 
+              parameter1: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+              parameter2: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+              
+- stage: Stage2
+  displayName: 'Stage2'
+  condition: and(eq(variables['Stage1'], true),contains(variables['Build.SourceBranch'], 'master'))
+
+  jobs:
+  - deployment: Stage2_Job1  
+    displayName: Stage2_Job1
+    environment: 'Stage2'
+    condition: eq(variables['Skip_Job1'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: template/sample-template.yaml
+            parameters:            
+              parameter1: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+              parameter2: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+
+
+
+  - deployment: Stage2_Job2  
+    displayName: Stage2_Job2
+    environment: 'Stage2'
+    condition: eq(variables['Skip_Job2'], false)
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: template/sample-template.yaml
+            parameters: 
+              parameter1: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+              parameter2: $(parameter1_from_variables_or_variables_group_or_hard_coded)
+

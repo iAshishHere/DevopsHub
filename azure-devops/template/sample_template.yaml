@@ -1,0 +1,27 @@
+parameters:
+- name: parameter1
+  type: string
+- name: parameter2
+  type: string
+    
+steps:
+- checkout: self
+
+- task: Bash@3
+  displayName: sample bash script
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "================"
+      pwd
+      echo "================"
+      ls
+      echo "================"
+
+- task: PythonScript@0
+  displayName: Sample Python Script
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: 'sample.py'
+    arguments: '${{ parameters.parameter1 }} ${{ parameters.parameter2 }}'
+
